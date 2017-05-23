@@ -16,11 +16,6 @@ import io.reactivex.schedulers.Schedulers;
 @Module
 public class UseCasesModule {
 
-    private String apiKey;
-
-    public UseCasesModule(String apiKey){
-        this.apiKey = apiKey;
-    }
 
     @Provides
     @Singleton
@@ -44,14 +39,14 @@ public class UseCasesModule {
 
     @Provides
     @Singleton
-    public DataManager provideCountriesRepository(RestApi restApi, ApiResponseMapper mapper) {
-        return new DataManager(restApi,apiKey, mapper);
+    public DataManager provideDataManager(RestApi restApi, ApiResponseMapper mapper) {
+        return new DataManager(restApi, mapper);
     }
 
     @Provides
     @Singleton
-    public GetGifsInteractor provideGetCountriesInteractor(@Named("work") Scheduler workScheduler, @Named("main") Scheduler mainSchduler, DataManager countriesRepository) {
-        return new GetGifsInteractor(workScheduler, mainSchduler, countriesRepository);
+    public GetGifsInteractor provideGetGifsInteractor(@Named("work") Scheduler workScheduler, @Named("main") Scheduler mainSchduler, DataManager dataManager) {
+        return new GetGifsInteractor(workScheduler, mainSchduler, dataManager);
     }
 
 }

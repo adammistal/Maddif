@@ -18,12 +18,10 @@ public class DataManager implements GifsRepository {
     private final RestApi restApi;
     private final ApiResponseMapper apiMapper;
     private final int MAX_GIGS_COUNT = 20;
-    private String apiKey;
 
-    public DataManager(RestApi restApi,String apiKey, ApiResponseMapper apiMapper) {
+    public DataManager(RestApi restApi, ApiResponseMapper apiMapper) {
         this.restApi = restApi;
         this.apiMapper = apiMapper;
-        this.apiKey = apiKey;
     }
 
     @Override
@@ -32,7 +30,7 @@ public class DataManager implements GifsRepository {
     }
 
     private Observable<List<String>> getGifsFromWeb() {
-        return restApi.getTrendingGifs(apiKey,MAX_GIGS_COUNT).flatMap(new Function<List<GifItem>, ObservableSource<List<String>>>() {
+        return restApi.getTrendingGifs(MAX_GIGS_COUNT).flatMap(new Function<List<GifItem>, ObservableSource<List<String>>>() {
             @Override
             public ObservableSource<List<String>> apply(@NonNull List<GifItem> responseBodies) throws Exception {
                 return Observable.just(apiMapper.mapResponse(responseBodies));

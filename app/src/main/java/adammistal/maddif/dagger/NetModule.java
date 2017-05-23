@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import adammistal.maddif.data.clients.api.ApiKeyInterceptor;
 import adammistal.maddif.data.clients.api.FeedDeserialize;
 import adammistal.maddif.data.clients.api.GifItem;
 import adammistal.maddif.data.clients.api.RestApi;
@@ -29,9 +30,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetModule {
 
     private String mBaseUrl;
+    private String apiKey;
 
-    public NetModule(String baseUrl) {
+    public NetModule(String baseUrl,String apiKey) {
         this.mBaseUrl = baseUrl;
+        this.apiKey = apiKey;
     }
 
     @Provides
@@ -59,11 +62,19 @@ public class NetModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor) {
+    public ApiKeyInterceptor provideApiKeyInterceptor(){
+        return new ApiKeyInterceptor(apiKey);
+    }
+
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor, ApiKeyInterceptor apiKeyInterceptor) {
 
         return new OkHttpClient()
                 .newBuilder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(apiKeyInterceptor)
                 .build();
     }
 
@@ -85,13 +96,5 @@ public class NetModule {
         return retrofit.create(RestApi.class);
     }
 
-/*
-
-    @Provides
-    @Singleton
-    public API provideApi(Retrofit retrofit) {
-        return retrofit.create(API.class);
-    }
-*/
 
 }

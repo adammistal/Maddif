@@ -22,11 +22,11 @@ public class MyApp extends Application {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         //region DAGGER 2
         ApplicationModule am = new ApplicationModule(this);
-        NetModule netModule = new NetModule(getString(R.string.base_url));
+        NetModule netModule = new NetModule(getString(R.string.base_url),getString(R.string.api_key));
 
         presenterComponent = DaggerPresenterComponent.builder()
                 .applicationModule(am)
-                .useCasesModule(new UseCasesModule(getString(R.string.api_key)))
+                .useCasesModule(new UseCasesModule())
                 .netModule(netModule)
                 .presenterModule(new PresenterModule())
                 .build();
