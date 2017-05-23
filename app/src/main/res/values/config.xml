@@ -1,0 +1,4 @@
+<resources>
+    <string name="base_url">http://api.giphy.com</string>
+    <string name="api_key">dc6zaTOxFJmzC</string><!--TODO ADD Production KEY -->
+</resources>

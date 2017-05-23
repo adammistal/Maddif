@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="GifRowBinding">
+
+        <variable
+            name="presenter"
+            type="adammistal.maddif.presentation.home.HomeContract.Presenter" />
+
+        <variable
+            name="model"
+            type="adammistal.maddif.presentation.home.GifViewModel" />
+    </data>
+    <android.support.percent.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image"
+            app:layout_widthPercent="100%"
+            app:layout_aspectRatio="100%"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            tools:background="#efdbed"
+            />
+    </android.support.percent.PercentFrameLayout>
+</layout>
